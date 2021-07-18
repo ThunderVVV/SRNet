@@ -1,0 +1,9 @@
+/datasets
+/tb_log*
+/logs
+/custom_feed
+!/custom_feed/labels
+/media
+
+*.pyc
+
