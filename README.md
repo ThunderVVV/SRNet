@@ -1,47 +1,11 @@
 # SRNet
-**Update** (27th August 2020) :
-
-A bug related to variable image size is fixed. You can now train with variable image sizes. This will improve generations significantly. 
-
-Training is now significantly faster. 
-Pull all changes and train as usual.  
-
-**Update** (26th July 2020) : 
-* Pre-trained weights have been uploaded. Please refer to the *Pre-trained weights* section for usage. 
-
-* The latest commit makes a few modifications to the model. Pull all changes before using the pre-trained weights.
-
----
-
-This repository presents SRNet ([Liang Wu et al](https://arxiv.org/pdf/1908.03047.pdf)), a neural network that tackles the problem of text editing in images. It marks the inception of an area of research that could automate advanced editing mechanisms in the future. 
-
-
-SRNet is a twin discriminator generative adversarial network that can edit text in any image while maintaining context of the background, font style and color. The demo below showcases one such use case. Movie poster editing.
-
-![](media/final.gif)
-
-L - Source ; R - Modified
-
-----
-### Architecture changes
-
-This implementation of SRNet introduces two main changes. 
-
-1. **Training**: The original SRNet suffers from instability. The generator loss belies the instability that occurs during training. This imbalance affects skeleton (t_sk) generation the maximum. The effect manifests when the generator produces a sequence of *bad* t_sk generations, however instead of bouncing back, it grows worse and finally leads to mode collapse. The culprit here is the min-max loss. A textbook method to solve this problem is to let the discriminator always be ahead of the generator. The same was employed in this implementation.
-
-
-2. **Generator**: In order to accomodate for a design constraint in the original net, I have added three extra convolution layers in the *decoder_net*.
-
-Incorporating these changes improved t_sk generations dramatically and increased stability. However, this also increased training time by ~15%. 
 
 ----
 ## Usage
 
-A virtual environment is the most convenient way to setup the model for training or inference. You can use *virtualenv* for this. The rest of this guide assumes that you are in one.
-
 - Clone this repository:
     ```bash
-    $ git clone https://github.com/Niwhskal/SRNet.git
+    $ git clone https://github.com/ThunderVVV/SRNet.git
 
     $ cd SRNet
     ```
@@ -83,22 +47,6 @@ In order to predict, you will need to provide a pair of inputs (The source *i_s*
     ```bash
     $ python3 predict.py --input_dir *data_dir* --save_dir *destination_dir* --checkpoint *path_to_ckpt*
     ```
-
-### Pre-trained weights
-
-You can download my pre-trained weights [here](https://drive.google.com/file/d/1UiLOywNnlCiyT6MPQ5YvIKw4XxYf93El/view?usp=sharing).
-
-Some results from the example directory:
-
-Source     |      Result
-:-------------------------:|:-------------------------:
-
-![](media/pre-trained_result.png)
-
-
-## Demo
-
-Code for the demo is hastily written and is quite slow. If anyone is interested in trying it out or would like to contribute to it, open an issue, submit a pull request or send me an email at `lakshwin045@gmail.com`. I can host it for you. 
 
 ## References
 

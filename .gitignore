@@ -4,6 +4,7 @@
 /custom_feed
 !/custom_feed/labels
 /media
+/.vscode
 
 *.pyc
 
